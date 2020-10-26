@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
+const img = "/css/background.jpg";
+
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/", function(req, res){
@@ -13,6 +15,8 @@ app.get("/", function(req, res){
 
 
 });
+
+app.use(express.static('public'));
 
 app.post("/", function(req,res){
   const query = req.body.cityName
@@ -27,9 +31,10 @@ app.post("/", function(req,res){
       const weatherDescription = weatherData.weather[0].description
       const icon = weatherData.weather[0].icon
       const iconURL = "https://openweathermap.org/img/wn/" + icon + "@2x.png"
-      res.write("<h1>The temp is " + temp + " degrees.</h1>");
-      res.write("<h2>There are " + weatherDescription + "!");
-      res.write("<h3><img src=" + iconURL + "></h3>");
+      res.write("<h1 style='text-align: center;'>The temp is " + temp + " degrees.</h1>");
+      res.write("<h2 style='text-align: center;'>There are " + weatherDescription + "!");
+      res.write("<h3 style='text-align: center;'><img src=" + iconURL + "></h3>");
+      res.write("<body style='background-image: url(" + img +"); background-size: cover;'></body>")
       res.send();
     })
   })
